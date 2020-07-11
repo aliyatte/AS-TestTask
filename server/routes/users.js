@@ -72,10 +72,17 @@ router.delete('/sessions', async (req, res) => {
 
 //editing user settings - user
 
-router.put('/', auth, async (req, res) => {
-  req.user.password = req.body.password;
-  await req.user.save();
-  res.send({message: 'OK'});
+router.patch('/profile', auth, async (req, res) => {
+  try {
+    if (req.body.password) {
+      req.user.password = req.body.password;
+    }
+
+    await req.user.save();
+    return res.send(req.user);
+  } catch (error) {
+    return res.sendStatus(500);
+  }
 });
 
 //getting a list of users - admin

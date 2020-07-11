@@ -31,13 +31,16 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
   try {
     const articleData = {
       title: req.body.title,
-      description: req.body.description,
       category: req.body.category,
-      user: req.user._id, //check
+      user: req.user._id,
     };
 
     if (req.file) {
       articleData.image = req.file.filename;
+    }
+
+    if (req.description) {
+      articleData.description = req.body.description;
     }
 
     const article = new Article(articleData);

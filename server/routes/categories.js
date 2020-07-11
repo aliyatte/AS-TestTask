@@ -52,7 +52,7 @@ router.delete('/:id', [auth, permit('admin')], async (req, res) => {
   const id = req.params.id;
 
   try {
-    const result = await Category.findByIdAndDelete(id);
+    await Category.findByIdAndDelete(id);
     return res.send("Successfully deleted");
   } catch (error) {
     return res.send({error});

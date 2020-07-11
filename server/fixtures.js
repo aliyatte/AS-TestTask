@@ -13,7 +13,7 @@ const run = async () => {
     await mongoose.connection.db.dropCollection(coll.name);
   }
 
-  await User.create({
+  const [user, admin] = await User.create({
     username: 'user',
     password: '123',
     token: nanoid(),
@@ -34,23 +34,26 @@ const run = async () => {
     title: 'Science',
     parent: null,
   });
-  //
-  // await Product.create({
-  //   title: 'Intel Core i7',
-  //   price: 400,
-  //   category: cpus,
-  //   image: 'fixtures/cpu.jpg'
-  // }, {
-  //   title: 'Seagate Barracuda 2TB',
-  //   price: 70,
-  //   category: hdds,
-  //   image: 'fixtures/hdd.jpg'
-  // }, {
-  //   title: 'ASUS Geforce RTX 2080Ti',
-  //   price: 1000,
-  //   category: gpus,
-  //   image: 'fixtures/gpu.jpg'
-  // });
+
+  await Article.create({
+    title: 'Silver century',
+    user: user,
+    category: poetry,
+    description: 'Silver century of Russian literature',
+    image: 'fixtures/silver_century.jpg',
+  }, {
+    title: 'Deep learning',
+    user: admin,
+    category: science,
+    description: 'Data science',
+    image: 'fixtures/deep_learning',
+  }, {
+    title: 'Last supper by Leonardo da Vinci',
+    user: admin,
+    category: art,
+    description: 'Secrets of the "Last supper',
+    image: 'fixtures/last_supper.jpg',
+  });
 
   mongoose.connection.close();
 };
